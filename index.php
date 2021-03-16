@@ -197,6 +197,8 @@ class User
 
   private $creditCard;
 
+  private $cardEnd;
+
   protected $productBought = [];
 
 
@@ -221,7 +223,7 @@ class User
 
 
 
-    public function setProductBought(string $product){
+    public function addProductBought(string $product){
 
       $this-> productBought[] = $product;
     }
@@ -235,9 +237,36 @@ class User
 
 
 
-    public function setCard(int $number){
+    public function setCard($number){
 
-      $this-> creditCard = $number;
+       if($number < 16){
+
+        echo '<br>' . '<br>' . 'Inserisci un numero di carta valido';
+
+        throw new Exception('card number is not valid');
+        
+       }    
+    
+       else {
+
+        $this-> creditCard = $number;
+      }
+
+  }
+
+
+
+  public function setEndCard($date){
+
+    $this-> cardEnd = $date;
+
+  }
+
+
+
+
+    public function getName(){
+      return $this-> name;
     }
     
     
@@ -249,7 +278,7 @@ class CreditCard extends User
 
 {
 
-  
+
 
 };
 
@@ -259,10 +288,15 @@ class CreditCard extends User
 
 
 
-$newshop = new shop('WhatYouWant', 'www.WhatYouWant.com');
-echo  'Benvenuto in ' . $newshop -> getNameShop() . ' Shop!' . '<br>' . '<br>';
+//CREAZIONE NEW USER
+$newUser = new user('Mirco','Verderosa','verderosamirco@gmail.com');
 
- echo 'Nel nostro sito ' . '<b>' . $newshop -> getWebSiteShop() . '</b>' . ' troverai le migliori offerte del momento!' . '<br>' . '<br>';
+
+$newshop = new shop('WhatYouWant', 'www.WhatYouWant.com');
+echo  'Ciao ' . $newUser-> getName() . ' benvenuto in ' . $newshop -> getNameShop() . ' Shop!' . '<br>' . '<br>';
+
+ echo 'Nel nostro sito ' . '<b>' . $newshop -> getWebSiteShop() . '</b>' . ' troverai le migliori offerte del momento!' . '<br>' . '<br>' 
+ . '<br>' . '<br>';
 
 
 
@@ -279,12 +313,22 @@ $sportProduct -> setStock(5);   //posso settare la quantità disponibile per il 
 
 $sportProduct -> setAvailabilityProduct($sportProduct-> getStock()); //in caso la disponibilità fosse 0, la proprietà available sarà = false
 
+$gloves = $sportProduct-> getProductName(); //la uso successivamente come articolo scelto dal cliente
+
+
+echo 'Hai selezionato ' . '<b>' . $sportProduct -> getProductName()
+
+ . '</b>' . ' il prezzo dell tuo articolo è '. '<b>' . $sportProduct -> getProductPrice(). '</b>' . ' euro' 
+
+. '<br>' . '<br>';
+
+
 
 //CONTROLLO TRAMITE UN METODO CHE IL PRODOTTO SIA DISPONIBILE
 
 if($sportProduct-> getAvailability()){
 
-  echo '<b>' . 'Ci sono solamente' . $sportProduct -> getStock() . ' prodotti disponibili affrettati' . '</b>';
+  echo '<b>' . 'Ci sono solamente ' . $sportProduct -> getStock() . ' prodotti disponibili affrettati' . '</b>' .'<br>' .'<br>';
 
 }
 
@@ -295,4 +339,25 @@ else{
 
 
 
+//PAGAMENTO ARTICOLO
 
+
+
+$newUser-> setCard(6574875620987245);
+
+
+$newUser-> addProductBought($gloves);
+
+
+$boughtProduct = $newUser -> getProductBought();
+
+
+foreach ($boughtProduct as $key => $value) {     //ciclo l'array dove 'pusho' l'articolo tramite il metodo 'addProductBought'
+
+  echo 'Nel tuo carrello è presente : '. '<b>' . $value . '</b>' . 
+  ' proseguire con l\'acquisto?';
+
+}
+
+//DA CONTINUARE GESTENDO LA SCADENZA DELL CARTA CREDITO PARAGONANDO LA DATA DI SCANDENZA AUMENTATA DI + 5 ANNI, CHE SIA SUPERIORE ALLA DATA ATTUALE
+//IN CASO CONTRARIO SARA SCADUTA
