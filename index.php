@@ -48,6 +48,10 @@ class Product
 
   protected $name;
 
+  protected $stock;
+
+  protected $available = false;
+
 
 
   public function __construct(string $branch){
@@ -57,23 +61,89 @@ class Product
 
 
 
+
   public function setProductName($specificName){
      
     $this-> name = $specificName;
+
+  }
+
+
+
+  public function getStock(){
+
+    return $this-> stock;
+  }
+
+
+
+  public function setStock(int $howMany){
+
+    $this-> stock = $howMany;
+    
   }
 
 
   
-  public function setProductPrice($specificPrice){
+  public function setProductPrice(int $specificPrice){
      
     $this-> price = $specificPrice;
   }
 
+
   
-  public function setProductId($specificId){
+  public function setProductId(int $specificId){
      
     $this-> id = $specificId;
   }
+
+
+
+  public function setAvailabilityProduct($pieces){
+    if($pieces > 0){
+
+      $this-> available = true;
+    }
+  }
+
+
+
+  public function getAvailability(){
+
+    return $this-> available;
+  }
+
+
+
+  public function getProductPrice(){
+    
+    if($this-> price > 0){
+
+      return $this-> price;
+    }
+
+    else {
+      echo 'Non è ancora stato inserito il prezzo
+       del prodotto ci scusiamo per il disagio';
+    }
+  
+
+  }
+
+
+
+  public function getProductName(){
+
+    return $this-> name;
+  }
+
+
+  
+  public function getProductId(){
+
+    return $this-> id;
+  }
+
 
 };
 
@@ -193,6 +263,35 @@ $newshop = new shop('WhatYouWant', 'www.WhatYouWant.com');
 echo  'Benvenuto in ' . $newshop -> getNameShop() . ' Shop!' . '<br>' . '<br>';
 
  echo 'Nel nostro sito ' . '<b>' . $newshop -> getWebSiteShop() . '</b>' . ' troverai le migliori offerte del momento!' . '<br>' . '<br>';
+
+
+
+//creazione di un nuovo prodotto guanti da boxe
+$sportProduct = new Sport('Sport');
+
+$sportProduct-> setProductName('Guantoni da boxe 12');
+
+$sportProduct -> setProductPrice(44);
+
+$sportProduct -> setProductId(1443);
+
+$sportProduct -> setStock(5);   //posso settare la quantità disponibile per il prodotto da qui
+
+$sportProduct -> setAvailabilityProduct($sportProduct-> getStock()); //in caso la disponibilità fosse 0, la proprietà available sarà = false
+
+
+//CONTROLLO TRAMITE UN METODO CHE IL PRODOTTO SIA DISPONIBILE
+
+if($sportProduct-> getAvailability()){
+
+  echo '<b>' . 'Ci sono solamente' . $sportProduct -> getStock() . ' prodotti disponibili affrettati' . '</b>';
+
+}
+
+else{
+
+  echo  '<b>' . ' In questo momento il  prodotto richiesto non è disponibile ci scusiamo per il disagio'  .'</b>' ;
+};
 
 
 
