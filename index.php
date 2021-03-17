@@ -276,7 +276,7 @@ class CreditCard
 
     public function setCard($number){
 
-       if($number < 16){
+       if(strlen($number) < 16){
 
         echo '<br>' . '<br>' . 'Inserisci un numero di carta valido';
 
@@ -377,14 +377,6 @@ $newCreditCard-> setCard(1093648345923466);
 $newCreditCard-> setExpirationCard('10-12-2024');
 
 
-if(count($newCreditCard-> getCard()) > 0){
-
-  echo 'I dati della tua carta sono stati inseriti coorettamente' .'<br>' .'<br>';
-
-}
-else {
-  echo 'Inserisci i dati della tua carta correttamente' .'<br>' .'<br>';
-};
 
 
 
