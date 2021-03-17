@@ -195,9 +195,7 @@ class User
 
   private $password;
 
-  private $creditCard;
-
-  private $cardEnd;
+  private $creditCard = [];
 
   protected $productBought = [];
 
@@ -214,9 +212,9 @@ class User
   }
 
 
-    public function setLogin($passCode, $email){
+    public function setLogin($password, $email){
     
-      $this-> password = $passCode;
+      $this-> password = $password;
 
       $this-> email = $email;
     }
@@ -237,6 +235,45 @@ class User
 
 
 
+
+    public function getName(){
+      return $this-> name;
+    }
+    
+    
+};
+
+
+
+class CreditCard 
+
+{
+    
+
+  private $number;
+
+  protected $ownerName;
+
+  protected $ownerSurname;
+
+  private $expirationDate;
+
+  private $securityCode;
+
+
+
+
+  public function __construct($ownerName,$ownerSurname){
+
+    $this-> ownerName = $ownerName;
+
+    $this-> ownerSurname = $ownerSurname;
+
+  }
+
+
+
+
     public function setCard($number){
 
        if($number < 16){
@@ -249,36 +286,26 @@ class User
     
        else {
 
-        $this-> creditCard = $number;
+        $this-> number = $number;
       }
 
   }
 
 
 
-  public function setEndCard($date){
+   public function getCard(){
+       
+    return $this-> number;
+
+   }
+
+
+
+  public function setExpirationCard(string $date){
 
     $this-> cardEnd = $date;
 
   }
-
-
-
-
-    public function getName(){
-      return $this-> name;
-    }
-    
-    
-};
-
-
-
-class CreditCard extends User
-
-{
-
-
 
 };
 
@@ -341,8 +368,24 @@ else{
 
 //PAGAMENTO ARTICOLO
 
+$newCreditCard = new CreditCard('Mirco','Verderosa');
 
-$newUser-> setCard(6574875620987245);
+
+$newCreditCard-> setCard(1093648345923466);
+
+
+$newCreditCard-> setExpirationCard('10-12-2024');
+
+
+if(count($newCreditCard-> getCard()) > 0){
+
+  echo 'I dati della tua carta sono stati inseriti coorettamente' .'<br>' .'<br>';
+
+}
+else {
+  echo 'Inserisci i dati della tua carta correttamente' .'<br>' .'<br>';
+};
+
 
 
 $newUser-> addProductBought($gloves);
