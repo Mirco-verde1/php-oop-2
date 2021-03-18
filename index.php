@@ -274,7 +274,7 @@ class CreditCard
 
 
 
-    public function setCard($number){
+    public function setCard(string $number){
 
        if(strlen($number) < 16){
 
@@ -371,7 +371,7 @@ else{
 $newCreditCard = new CreditCard('Mirco','Verderosa');
 
 
-$newCreditCard-> setCard(1093648345923466);
+$newCreditCard-> setCard('1093648345923466');
 
 
 $newCreditCard-> setExpirationCard('10-12-2024');
